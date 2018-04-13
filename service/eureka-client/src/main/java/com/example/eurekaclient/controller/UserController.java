@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * APP账号管理服务
- */
+
 @Api(description="User服务", tags = "USER API")
 @ConditionalOnWebApplication
 @RestController
@@ -44,6 +42,8 @@ public class UserController extends BaseController {
     @ApiOperation(value="新增User---使用 JPA")
     @PutMapping(value = "/service/save")
     public ApiResponse save(@RequestBody  @ApiParam(name="用户对象",value="传入json格式",required=true) User user)  {
+        userService.save(user);
+        user.setName(null);
         userService.save(user);
         return super.callback(true);
     }

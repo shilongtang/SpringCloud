@@ -22,9 +22,9 @@ public class User {
 
     @Id
     public String id;
-    @Column(length = 35)
+    @Column(length = 35,nullable = false)
     public String name;
-    @Column(length = 3)
+    @Column(length = 1)
     public Integer age;
 
     public int getAge() {

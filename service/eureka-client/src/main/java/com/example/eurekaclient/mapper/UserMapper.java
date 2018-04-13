@@ -2,6 +2,7 @@ package com.example.eurekaclient.mapper;
 
 import com.example.eurekaclient.model.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 

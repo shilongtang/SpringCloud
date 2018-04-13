@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.eurekaclient.mapper.UserMapper;
 import com.example.eurekaclient.model.ApiResponse;
 import com.example.eurekaclient.model.User;
+import com.example.eurekaclient.service.UserService;
 import com.example.eurekaclient.utils.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,7 +15,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.PUT;
 import java.util.Map;
 
 @Api(description="Spring Boot Mybatis", tags = "MYBATIS API")
@@ -27,6 +27,8 @@ public class MybatisController extends BaseController {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    UserService userService;
     /**
      * 新增User   属性传参
      * @param id
@@ -37,7 +39,8 @@ public class MybatisController extends BaseController {
     @ApiOperation(value="新增User 属性传参")
     @PutMapping(value = "/service/addUser")
     public ApiResponse insert(@RequestParam String id,@RequestParam String name,@RequestParam Integer age)  {
-        userMapper.insert(id, name, age);
+        userService.maddUser(id, name, age);
+        userService.maddUser("12312313", null, 12);
         return super.callback(true);
     }
     /**
@@ -63,6 +66,8 @@ public class MybatisController extends BaseController {
         JSONObject jsonObject = JSONObject.parseObject(body);//先转换成Object
         Map map = (Map)jsonObject;         //Object强转换为Map
         userMapper.insertMap(map);
+        userMapper.delete("sadsadsadsad");
+
         return super.callback(true);
     }
     /**

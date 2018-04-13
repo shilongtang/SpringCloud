@@ -1,5 +1,6 @@
 package com.example.eurekaclient.service;
 
+import com.example.eurekaclient.mapper.UserMapper;
 import com.example.eurekaclient.model.User;
 import com.example.eurekaclient.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -12,16 +13,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
+    public Integer pageMaxSize = 4000;
     protected Logger logger= LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    UserMapper userMapper;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -34,6 +40,15 @@ public class UserServiceImpl implements UserService {
         jdbcTemplate.update("INSERT INTO USER(id,NAME, AGE) values(?, ?,?)", id, name, age);
     }
 
+    @Override
+    public Page<User> list(int pageNumber, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public Page<User> list(int pageNumber, int pageSize, Sort.Direction direction, String... properties) {
+        return null;
+    }
 
     @Override
     public void deleteUserByid(String id) {
@@ -59,13 +74,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> findByPropertyImpl(Relation relation, List<String> propertyName, List<String> propertyValue, int pageNumber, int pageSize, Sort.Direction direction, String... properties) {
-       /* return  userRepository
-                .findAll(
+        return  userRepository.findAll(
                         (root, query, cb) -> specification(relation, propertyName, propertyValue, root, query, cb),
                         getPageRequest(pageNumber, pageSize, pageMaxSize, direction, properties)
-                );*/
-       return null;
+                );
     }
 
-
+    @Override
+    public void maddUser(String id, String name, Integer age) {
+        userMapper.insert(id,name,age);
+    }
 }
