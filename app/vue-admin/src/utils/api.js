@@ -4,6 +4,6 @@ import fetch from './fetch';
 export function muenList() {
   return fetch({
     url: '/menu/service/delete/1/10',
-    method: 'POST',
+    method: 'GET',
   });
 }

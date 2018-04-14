@@ -2,7 +2,7 @@
   <el-row :gutter="18">
     <el-col :span="12">
       <div class="panel">
-        <div class="panel-title">{{$t('index.Message')}}</div>
+        <div class="panel-title">{{ "xxxx"}}</div>
         <div class="panel-body">
           <div class="index-container">
 
@@ -12,7 +12,7 @@
     </el-col>
     <el-col :span="12">
       <div class="panel">
-        <div class="panel-title">{{$t('index.Dynamic')}}</div>
+        <div class="panel-title">{{"xxxx"}}</div>
         <div class="panel-body">
           <div class="index-container">
 

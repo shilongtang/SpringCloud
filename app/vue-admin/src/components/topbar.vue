@@ -24,7 +24,7 @@
         |
         <a href="javascript: void(0);">
           <i class="icon icon-wxbdingwei"></i>
-          <ymp-org @change="saveState" :showText="true" :global="true" @go="goIndex" widthValue="220"></ymp-org>
+         <!-- <ymp-org @change="saveState" :showText="true" :global="true" @go="goIndex" widthValue="220"></ymp-org>-->
         </a>
         |
         <div style="float: right" @mouseenter="enter" @mouseleave="leave">

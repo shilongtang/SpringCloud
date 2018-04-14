@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const target = 'http://47.98.112.60:1001';
+const target = 'http://127.0.0.1:1001';
 const context = '/gi-saas-sd-';
 let proxyTable = {
 };
@@ -11,7 +11,7 @@ proxyTable[context] = {
   target,
   changeOrigin: true
 }
-proxyTable['/api'] = {
+proxyTable['/menu'] = {
   target,
   changeOrigin: true
 }

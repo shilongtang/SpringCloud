@@ -1,4 +1,3 @@
-<!--
 <template>
 
   <ym-panel name="菜单配置">
@@ -46,7 +45,7 @@
           </div>
 
           <el-col :span="24" class="form-wrap">
-            &lt;!&ndash;:rules="rules" 验证&ndash;&gt;
+            <!--:rules="rules" 验证-->
             <el-form :model="formInline" ref="formInline" label-width="100px" :label-position="'left'">
 
               <el-form-item label="编码" prop="description" class="item-5">
@@ -79,7 +78,7 @@
 
 <script>
 
-  import { getList,deleteById,save,getDataById,lookUp,querySql} from './api';
+  //import { getList,deleteById,save,getDataById,lookUp,querySql} from './api';
 
   export default {
     data() {
@@ -109,7 +108,7 @@
     },
     mounted(){
       const _this=this;
-      _this.tableDataInit();
+     // _this.tableDataInit();
     },
     methods: {
       setCurrent(row) {
@@ -390,4 +389,3 @@
 
 <style>
 </style>
--->

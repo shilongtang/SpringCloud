@@ -14,7 +14,7 @@
 
               <template slot="title">
                 <i v-if='item1.icon' class="fa" :class="item1.icon"></i>
-                <span slot="title">{{locale == item1.description}}</span>
+                <span slot="title">{{locale == 'en'? item1.foreignLanguageDescription : item1.description}}</span>
               </template>
 
               <template v-for="item2 in item1.children">
@@ -25,7 +25,7 @@
 
                     <el-submenu :index="item2.code">
 
-                      <span slot="title" class="el-submenu__title-2">{{locale == item2.description}}</span>
+                      <span slot="title" class="el-submenu__title-2">{{locale == 'en'? item2.foreignLanguageDescription : item2.description}}</span>
 
                       <template v-for="item3 in item2.children">
 
@@ -33,7 +33,7 @@
 
                             <el-menu-item :index="item3.code"  class="el-menu-item-3">
                               <span slot="title"><router-link
-                                :to="{name:item3.code}">{{ locale == item3.description}}</router-link></span>
+                                :to="{name:item3.code}">{{ locale == 'en'? item3.foreignLanguageDescription : item3.description}}</router-link></span>
                             </el-menu-item>
 
                         </template>
@@ -46,7 +46,7 @@
 
                   <template v-else>
                     <el-menu-item :index="item2.code" class="el-menu-item-2">
-                      <span slot="title"><router-link :to="{name:item2.code}">{{locale ==item2.description}}</router-link></span>
+                      <span slot="title"><router-link :to="{name:item2.code}">{{locale == 'en'? item2.foreignLanguageDescription : item2.description}}</router-link></span>
                     </el-menu-item>
                   </template>
 
@@ -61,7 +61,7 @@
           <template v-else>
             <el-menu-item :index="item1.code||''"  class="el-menu-item-1">
               <i v-if='item1.icon' class="fa" :class="item1.icon"></i>
-              <span slot="title"><router-link :to="{name:item1.code}">{{locale ==  item1.description}}</router-link></span>
+              <span slot="title"><router-link :to="{name:item1.code}">{{locale == 'en'? item1.foreignLanguageDescription : item1.description}}</router-link></span>
             </el-menu-item>
           </template>
         </template>

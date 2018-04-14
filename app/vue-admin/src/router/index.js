@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from '@/components/HelloWorld'
 import {muenList } from '../utils/api';
 import view from '../components/view';
 import layout from '../components/layout';
@@ -8,20 +7,65 @@ import menuListPage from '../components/menuList';
 import menuTab from '../components/menuTab';
 import apps from '../apps';
 import config from '../config';
-import commons from '../utils/fetch';
+//import commons from '../utils/treeUtils';
 import index from '../apps/index/desktop';
+import HelloWorld from '../components/HelloWorld'
 
 Vue.use(Router);
 
-/*export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+function toTree(list, parent, id, pid) {
+  const children = list.filter(item => {
+    return item[pid] === parent[id];
+  });
+  if (children.length !== 0) {
+    parent.children = children;
+    children.forEach(item => {
+      toTree(list, item, id, pid);
+    });
+  }
+}
+
+function getParent(list, id, pid) {
+  return list.filter(item => {
+    return list.every(obj => {
+      return item[pid] !== obj[id];
+    });
+  });
+}
+
+export function list2tree(list, id = 'id', pid = 'parentId') {
+  const topList = getParent(list, id, pid);
+  topList.forEach(item => toTree(list, item, id, pid));
+  return topList;
+}
+
+export function findChildren(pid, list) {
+  const tree = findTreeNode(pid, list2tree(list));
+  if (tree) {
+    return tree.children;
+  } else {
+    return [];
+  }
+}
+
+let routerList = [];
+
+function findTreeNode(treeId, treeList) {
+  for (let i = 0; i < treeList.length; i++) {
+    if (treeList[i].id === treeId) {
+      return treeList[i];
+    } else {
+      if(treeList[i].children&&treeList[i].children.length>0){
+        const treeNode = findTreeNode(treeId, treeList[i].children);
+        if(treeNode){
+          return treeNode;
+        }
+      }
     }
-  ]
-})*/
+  }
+  return null;
+}
+
 function buildRouter(parent,router, apps) {
   router.forEach(route => {
     const tag = apps.find(app => app.name === route.name);
@@ -38,14 +82,10 @@ function buildRouter(parent,router, apps) {
   });
 }
 export default new Promise((resolve, reject) => {
-
-  console.log("xxxxxxxxxxxx")
   muenList().then(result=>{
     const list = [];
     const menuList = result.body.content;
-
     menuList.forEach(menu => {
-      menu = menu.functionMenu;
       const route = apps.find(route => route.name === menu.code);
       if (route) {
         menu.path = route.path;
@@ -54,19 +94,18 @@ export default new Promise((resolve, reject) => {
         menu.component = route.component;
         list.push(menu);
 
-        apps.filter(item => item.name.indexOf(route.name)===0&&item.name!==route.name)
-          .forEach(item=>{
-            const menuNew = {};
-            for (let key in menu) {
-              menuNew[key] = menu[key];
-            }
-            menuNew.path = item.path;
-            menuNew.name = item.name;
-            menuNew.meta = item.meta;
-            menuNew.hidden = true;
-            menuNew.component = item.component;
-            list.push(menuNew);
-          });
+        apps.filter(item => item.name.indexOf(route.name)===0&&item.name!==route.name).forEach(item=>{
+          const menuNew = {};
+          for (let key in menu) {
+            menuNew[key] = menu[key];
+          }
+          menuNew.path = item.path;
+          menuNew.name = item.name;
+          menuNew.meta = item.meta;
+          menuNew.hidden = true;
+          menuNew.component = item.component;
+          list.push(menuNew);
+        });
       } else {
         menu.name = menu.code;
         menu.path = menu.code;
@@ -96,9 +135,7 @@ export default new Promise((resolve, reject) => {
       }
 
     });
-
     const newList = [];
-
     list.forEach(item => {
       const newItem = {};
       for (let key in item) {
@@ -109,7 +146,7 @@ export default new Promise((resolve, reject) => {
       newList.push(newItem);
     });
 
-    const routerList = commons.TreeUtils.list2tree(newList);
+    const routerList = list2tree(newList);
     buildRouter(null, routerList, list);
 
     routerList.push({
@@ -118,7 +155,7 @@ export default new Promise((resolve, reject) => {
       hidden:true,
       component: index,
     });
-    debugger
+
     const router = new Router({
       routes: [
         {
@@ -130,5 +167,6 @@ export default new Promise((resolve, reject) => {
         }
       ],
     });
+    resolve(router);
   })
 });
