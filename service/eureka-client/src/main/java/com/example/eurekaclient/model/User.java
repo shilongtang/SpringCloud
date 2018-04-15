@@ -4,6 +4,7 @@ package com.example.eurekaclient.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 public class User {
@@ -17,9 +18,7 @@ public class User {
      *  table属性表示当映射多个表时，指定表的表中的字段。默认值为主表的表名。有关多个表的映射将在本章的5.6小节中详细讲述*
      *  length属性表示字段的长度，当字段的类型为varchar时，该属性才有效，默认为255个字符*
      *  precision属性和scale属性表示精度，当字段类型为double时，precision表示数值的总长度，scale表示小数点所占的位数。
-     *
      */
-
     @Id
     public String id;
     @Column(length = 35,nullable = false)

@@ -19,6 +19,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {

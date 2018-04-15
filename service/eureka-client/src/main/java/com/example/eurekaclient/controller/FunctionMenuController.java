@@ -53,11 +53,14 @@ public class FunctionMenuController extends BaseController {
      * List
      */
     @ApiOperation(value="List")
-    @GetMapping(value = "/service/delete/{number}/{size}")
+    @GetMapping(value = "/service/list/{number}/{size}")
     public ApiResponse delete(@PathVariable Integer number,@PathVariable Integer size)  {
-
         Page<FunctionMenu> list = functionMenuService.list(number, size);
-
-        return super.callbackSuccess(JSONObject.toJSONString(list));
+        JSONObject result = new JSONObject();
+        result.put("pageNumber",number);
+        result.put("pageSize",size);
+        result.put("totalCount",list.getTotalElements());//总数量
+        result.put("list",list.getContent());
+        return super.callbackSuccess(JSONObject.toJSONString(result));
     }
 }
