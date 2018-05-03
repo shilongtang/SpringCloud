@@ -2,7 +2,6 @@ package com.example.sqlcompute.utils;
 
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class PostgreSQLPageSql implements PageSql {
 

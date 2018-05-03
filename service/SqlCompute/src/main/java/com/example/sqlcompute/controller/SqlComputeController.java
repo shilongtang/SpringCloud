@@ -84,7 +84,7 @@ public class SqlComputeController extends BaseController {
         }catch (Exception e){
             String _message = "导出excel文档失败: "+e.getMessage();
             logger.error(_message, e);
-            printStackTrace(e);
+            e.printStackTrace();
             Map<String, Object> map = new HashMap<>();
             map.put("message", _message);
             return super.callbackFail(map);

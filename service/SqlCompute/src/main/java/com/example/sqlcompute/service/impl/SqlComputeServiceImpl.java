@@ -4,8 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.blinkfox.zealot.bean.SqlInfo;
-import com.blinkfox.zealot.config.ZealotConfigManager;
 import com.blinkfox.zealot.core.Zealot;
+import com.blinkfox.zealot.core.ZealotConfigManager;
+import com.example.sqlcompute.config.ZealotConfiguration;
 import com.example.sqlcompute.service.SqlComputeService;
 import com.example.sqlcompute.utils.*;
 import org.slf4j.Logger;
@@ -37,7 +38,7 @@ public class SqlComputeServiceImpl implements SqlComputeService {
     @PostConstruct
     private void init() {
         //使用扫描包的方式 zealot 1.3.0 新增方式
-        ZealotConfigManager.getInstance().initLoadXmlLocations("sql/xml");
+        ZealotConfigManager.getInstance().initLoad(ZealotConfiguration.class);
     }
 
     @Override
@@ -79,6 +80,9 @@ public class SqlComputeServiceImpl implements SqlComputeService {
     @Override
     public String querySql(String json) {
         Param param = JSON.parseObject(json, Param.class);
+        String sqlFile = param.getSqlFile();
+        String sqlFile1 = param.getSqlKey();
+        Map map =  param.getParamMap();
         SqlInfo sqlInfo = Zealot.getSqlInfo(param.getSqlFile(), param.getSqlKey(), param.getParamMap());
         String sql = sqlInfo.getSql();
         Object[] params = sqlInfo.getParamsArr();

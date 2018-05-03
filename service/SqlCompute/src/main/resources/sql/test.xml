@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 命名空间nameSpace为zealots的根节点属性，各xml文件的nameSpace不能相同，如果不填nameSpace则需在ZealotConfig中配置与xml的nameSpace映射值. -->
+<zealots>
+    <!-- 根据Id查询学生信息. -->
+    <zealot id="queryTest">
+        SELECT * FROM function_menu
+    </zealot>
+
+</zealots>

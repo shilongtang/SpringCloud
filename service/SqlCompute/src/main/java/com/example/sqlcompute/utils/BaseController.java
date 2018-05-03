@@ -2,14 +2,23 @@ package com.example.sqlcompute.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class BaseController {
+    protected boolean returnExceptionStackTraceToFront =true;
+
     protected Logger logger= LoggerFactory.getLogger(getClass());
 
     protected ApiResponse callback(boolean success) {
@@ -79,6 +88,4 @@ public class BaseController {
         }
         return new ApiResponse(new ApiResponseState(ApiResponseCode.ERROR_CODE, message), json);
     }
-
-
 }

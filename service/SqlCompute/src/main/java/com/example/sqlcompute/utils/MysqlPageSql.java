@@ -1,10 +1,5 @@
 package com.example.sqlcompute.utils;
 
-/**
- * user: pkd
- * data: 2017/7/15
- * time: 15:14
- */
 public class MysqlPageSql implements PageSql {
 
 
