@@ -1,10 +1,12 @@
 package com.example.eurekaclient.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.eurekaclient.model.ApiResponse;
 import com.example.eurekaclient.model.FunctionMenu;
 import com.example.eurekaclient.service.FunctionMenuService;
 import com.example.eurekaclient.utils.BaseController;
+import com.example.eurekaclient.utils.ResultPageable;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -56,11 +58,12 @@ public class FunctionMenuController extends BaseController {
     @GetMapping(value = "/menu/service/list/{number}/{size}")
     public ApiResponse delete(@PathVariable Integer number,@PathVariable Integer size)  {
         Page<FunctionMenu> list = functionMenuService.list(number, size);
-        JSONObject result = new JSONObject();
-        result.put("pageNumber",number);
-        result.put("pageSize",size);
-        result.put("totalCount",list.getTotalElements());//总数量
-        result.put("list",list.getContent());
-        return super.callbackSuccess(JSONObject.toJSONString(result));
+        ResultPageable pageData = new ResultPageable(
+                number,
+                size,
+                (int)list.getTotalElements(),
+                list.getTotalPages(),
+                JSON.toJSONString(list.getContent()));
+        return super.callbackSuccess(pageData.toJson());
     }
 }
