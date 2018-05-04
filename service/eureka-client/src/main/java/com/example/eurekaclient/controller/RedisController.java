@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Api(description="Spring Boot redis", tags = "REDIS API")
 @ConditionalOnWebApplication
 @RestController
-@RequestMapping("/redis")
+@RequestMapping("/api")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class RedisController extends BaseController {
 
@@ -37,7 +37,7 @@ public class RedisController extends BaseController {
      * @return
      */
     @ApiOperation(value="将一个用户存入redis中")
-    @PutMapping(value = "/service/addUserToRedis")
+    @PutMapping(value = "/redis/service/addUserToRedis")
     public ApiResponse insert(@RequestBody @ApiParam(name="用户对象",value="传入json格式",required=true) User user)  {
         stringRedisTemplate.opsForValue().set(user.getId(),JSONObject.toJSONString(user),600, TimeUnit.SECONDS);
         return super.callback(true);
@@ -52,7 +52,7 @@ public class RedisController extends BaseController {
      * @return
      */
     @ApiOperation(value="向redis中存入一个数据")
-    @PostMapping(value = "/service/addRedisValue")
+    @PostMapping(value = "/redis/service/addRedisValue")
     public ApiResponse addKey(@RequestParam String key,@RequestParam String value,@RequestParam Integer time,@RequestParam String type)  {
         TimeUnit seconds = TimeUnit.SECONDS;
         if(StringUtils.equals("m",type)){
@@ -69,7 +69,7 @@ public class RedisController extends BaseController {
      * @return
      */
     @ApiOperation(value="val操作")
-    @PostMapping(value = "/service/redisValueChange")
+    @PostMapping(value = "/redis/service/redisValueChange")
     public ApiResponse redisKeyValueMinus(@RequestParam String key,@RequestParam Integer value)  {
         stringRedisTemplate.boundValueOps(key).increment(value);
         return super.callback(true);
@@ -81,7 +81,7 @@ public class RedisController extends BaseController {
      * @return
      */
     @ApiOperation(value="获取一个key的过期时间")
-    @PostMapping(value = "/service/getRedisByKeyTime")
+    @PostMapping(value = "/redis/service/getRedisByKeyTime")
     public ApiResponse getKyeTime(@RequestParam String key)  {
         Long expire = stringRedisTemplate.getExpire(key, TimeUnit.SECONDS);
         return super.callbackSuccess(expire.toString());
@@ -93,7 +93,7 @@ public class RedisController extends BaseController {
      * @return
      */
     @ApiOperation(value="根据id从redis中查询用户数据")
-    @GetMapping(value = "/service/findRedisUserByid/{id}")
+    @GetMapping(value = "/redis/service/findRedisUserByid/{id}")
     public ApiResponse getRedisUserById(@PathVariable String id)  {
         String s = stringRedisTemplate.opsForValue().get(id);
         User user = JSONObject.parseObject(s, User.class);
@@ -105,7 +105,7 @@ public class RedisController extends BaseController {
      * @return
      */
     @ApiOperation(value="根据id从redis中查询数据")
-    @GetMapping(value = "/service/findRedisByid/{id}")
+    @GetMapping(value = "/redis/service/findRedisByid/{id}")
     public ApiResponse getRedisById(@PathVariable String id)  {
         String s = stringRedisTemplate.opsForValue().get(id);
         return super.callbackSuccess(s);

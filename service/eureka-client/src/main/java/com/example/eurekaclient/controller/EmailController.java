@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(description="Spring Boot Mail", tags = "Mail API")
 @ConditionalOnWebApplication
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/api")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class EmailController extends BaseController {
 
@@ -38,7 +38,7 @@ public class EmailController extends BaseController {
      * @return
      */
     @ApiOperation(value="普通文本邮件发送")
-    @PutMapping(value = "/service/textSent")
+    @PutMapping(value = "/mail/service/textSent")
     public ApiResponse insert(@RequestParam String to, @RequestParam String subject, @RequestParam String text)  {
 
         SimpleMailMessage message = new SimpleMailMessage();

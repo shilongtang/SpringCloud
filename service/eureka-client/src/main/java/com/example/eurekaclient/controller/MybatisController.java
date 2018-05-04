@@ -20,7 +20,7 @@ import java.util.Map;
 @Api(description="Spring Boot Mybatis", tags = "MYBATIS API")
 @ConditionalOnWebApplication
 @RestController
-@RequestMapping("/mybatis")
+@RequestMapping("/api")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class MybatisController extends BaseController {
 
@@ -37,7 +37,7 @@ public class MybatisController extends BaseController {
      * @return
      */
     @ApiOperation(value="新增User 属性传参")
-    @PutMapping(value = "/service/addUser")
+    @PutMapping(value = "/mybatis/service/addUser")
     public ApiResponse insert(@RequestParam String id,@RequestParam String name,@RequestParam Integer age)  {
         userService.maddUser(id, name, age);
         userService.maddUser("12312313", null, 12);
@@ -49,7 +49,7 @@ public class MybatisController extends BaseController {
      * @return
      */
     @ApiOperation(value="新增User 对象传参")
-    @PutMapping(value = "/service/addObjectParamUser")
+    @PutMapping(value = "/mybatis/service/addObjectParamUser")
     public ApiResponse insertObjectParam(@RequestBody @ApiParam(name="用户对象",value="传入json格式",required=true) User user)  {
         userMapper.insertObject(user);
         return super.callback(true);
@@ -61,7 +61,7 @@ public class MybatisController extends BaseController {
      * @return
      */
     @ApiOperation(value="新增User Map传参")
-    @PostMapping(value = "/service/addMapUser")
+    @PostMapping(value = "/mybatis/service/addMapUser")
     public ApiResponse insertMapParam(@RequestBody String body){
         JSONObject jsonObject = JSONObject.parseObject(body);//先转换成Object
         Map map = (Map)jsonObject;         //Object强转换为Map
@@ -76,7 +76,7 @@ public class MybatisController extends BaseController {
      * @return
      */
     @ApiOperation(value="根据用户名查询 返回map方式")
-    @PostMapping(value = "/service/findByname")
+    @PostMapping(value = "/mybatis/service/findByname")
     public ApiResponse findByname(@RequestParam String name)  {
         Map byname = userMapper.findByname(name);
         return super.callbackSuccess(byname);
@@ -88,7 +88,7 @@ public class MybatisController extends BaseController {
      * @return
      */
     @ApiOperation(value="根据用户id删除用户")
-    @DeleteMapping(value = "/service/delete{id}")
+    @DeleteMapping(value = "/mybatis/service/delete{id}")
     public ApiResponse delete(@RequestParam String id)  {
         userMapper.delete(id);
         return super.callback(true);
@@ -99,7 +99,7 @@ public class MybatisController extends BaseController {
      * @return
      */
     @ApiOperation(value="根据用户id删除用户")
-    @PutMapping(value = "/service/update")
+    @PutMapping(value = "/mybatis/service/update")
     public ApiResponse update(@RequestBody @ApiParam User user)  {
         userMapper.update(user);
         return super.callback(true);

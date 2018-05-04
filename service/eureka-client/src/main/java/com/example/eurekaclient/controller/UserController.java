@@ -30,7 +30,7 @@ public class UserController extends BaseController {
      * 新增
      */
     @ApiOperation(value="新增User---使用 JdbcTemplate")
-    @PutMapping(value = "/service/addUser")
+    @PutMapping(value = "/user/service/addUser")
     public ApiResponse insert(@RequestBody  @ApiParam(name="用户对象",value="传入json格式",required=true) User user)  {
         userService.addUser(user.getId(),user.getName(),user.getAge());
         return super.callback(true);
@@ -40,7 +40,7 @@ public class UserController extends BaseController {
      * 新增
      */
     @ApiOperation(value="新增User---使用 JPA")
-    @PutMapping(value = "/service/save")
+    @PutMapping(value = "/user/service/save")
     public ApiResponse save(@RequestBody  @ApiParam(name="用户对象",value="传入json格式",required=true) User user)  {
         userService.save(user);
         user.setName(null);
@@ -52,7 +52,7 @@ public class UserController extends BaseController {
      * 查询
      */
     @ApiOperation(value="根据name查询User---使用 JPA")
-    @PostMapping(value = "/service/findByName")
+    @PostMapping(value = "/user/service/findByName")
     public ApiResponse findByName(@RequestParam(required = false) String name)  {
         List<User> byNname = userService.findByNname(name);
         return super.callbackSuccess(JSONArray.toJSONString(byNname));
@@ -62,7 +62,7 @@ public class UserController extends BaseController {
      * 删除
      */
     @ApiOperation(value="根据id删除User---使用 JPA")
-    @DeleteMapping(value = "/service/{id}")
+    @DeleteMapping(value = "/user/service/{id}")
     public ApiResponse deleteById(@PathVariable String id)  {
         userService.deleteUserByid(id);
         return super.callback(true);
@@ -71,7 +71,7 @@ public class UserController extends BaseController {
      * 根据id查询用户
      */
     @ApiOperation(value="根据id查询用户---使用 JPA")
-    @GetMapping(value = "/service/{id}")
+    @GetMapping(value = "/user/service/{id}")
     public ApiResponse getUserById(@PathVariable String id)  {
         User one = userService.findOne(id);
         return super.callbackSuccess(JSONObject.toJSONString(one));

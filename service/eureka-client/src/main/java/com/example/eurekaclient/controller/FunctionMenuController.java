@@ -20,7 +20,7 @@ import java.util.List;
 @Api(description="菜单服务", tags = "FunctionMenu API")
 @ConditionalOnWebApplication
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/api")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FunctionMenuController extends BaseController {
 
@@ -30,7 +30,7 @@ public class FunctionMenuController extends BaseController {
      * 新增
      */
     @ApiOperation(value="新增User")
-    @PutMapping(value = "/service/save")
+    @PutMapping(value = "/menu/service/save")
     public ApiResponse save(@RequestBody @ApiParam(name="用户对象",value="传入json格式",required=true) FunctionMenu functionMenu)  {
 
         FunctionMenu save = functionMenuService.save(functionMenu);
@@ -41,7 +41,7 @@ public class FunctionMenuController extends BaseController {
      * 删除
      */
     @ApiOperation(value="删除根据User")
-    @DeleteMapping(value = "/service/delete/{id}")
+    @DeleteMapping(value = "/menu/service/delete/{id}")
     public ApiResponse delete(@PathVariable String id)  {
 
       functionMenuService.deleteUserByid(id);
@@ -53,7 +53,7 @@ public class FunctionMenuController extends BaseController {
      * List
      */
     @ApiOperation(value="List")
-    @GetMapping(value = "/service/list/{number}/{size}")
+    @GetMapping(value = "/menu/service/list/{number}/{size}")
     public ApiResponse delete(@PathVariable Integer number,@PathVariable Integer size)  {
         Page<FunctionMenu> list = functionMenuService.list(number, size);
         JSONObject result = new JSONObject();
