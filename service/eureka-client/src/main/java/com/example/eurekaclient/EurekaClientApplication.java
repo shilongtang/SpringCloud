@@ -3,6 +3,7 @@ package com.example.eurekaclient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement  // 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven />
 @EnableDiscoveryClient
 @EnableScheduling // 注解，启用定时任务的配置
+@EnableFeignClients//开启跨服务调用 Feign客户端的功能
 @SpringBootApplication
 public class EurekaClientApplication {
 

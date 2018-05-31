@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.eurekaclient.model.ApiResponse;
 import com.example.eurekaclient.model.User;
+import com.example.eurekaclient.service.Stub;
 import com.example.eurekaclient.service.UserService;
 import com.example.eurekaclient.utils.BaseController;
+import com.netflix.discovery.converters.Auto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,6 +28,22 @@ import java.util.List;
 public class UserController extends BaseController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    Stub.SqlService sqlService;
+
+    /**
+     * 新增
+     */
+    @ApiOperation(value="新增User---使用 JdbcTemplate")
+    @PutMapping(value = "/test")
+    public ApiResponse test(@RequestBody String body)  {
+        String s = sqlService.querySql(body);
+        System.out.
+                println(s);
+        return super.callback(true);
+    }
+
     /**
      * 新增
      */
